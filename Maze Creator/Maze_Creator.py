@@ -15,6 +15,7 @@ class MazeCreator:
 
         
         self.history = [np.copy(self.maze)]
+
         #create random maze using randomized prim algorithm
         
         start = rand.choice(range(size**2))
@@ -58,51 +59,11 @@ class MazeCreator:
                 if row > 0 and not self.maze[row-1,col]:
                     list.add((row-1)*size+col)
 
-        #choose start and end points - not in a wall and in a distance of at leest 2
-
-        self.start = rand.choice(range(size**2))
-        scol = int(self.start % len(self.maze[0]))
-        srow = int((self.start-scol) / len(self.maze[0]))
-        while not self.maze[srow,scol]:
-            self.start = rand.choice(range(size**2))
-            scol = int(self.start % len(self.maze[0]))
-            srow = int((self.start-scol) / len(self.maze[0]))
-
-
-
-        self.end = rand.choice(range(size**2))
-
-        ecol = int(self.end % len(self.maze[0]))
-        erow = int((self.end-ecol) / len(self.maze[0]))
-
-        while abs(ecol - scol)+abs(erow - srow) <2 or not self.maze[erow,ecol]:
-            self.end = rand.choice(range(size**2))
-        
-            ecol = int(self.end % len(self.maze[0]))
-            erow = int((self.end-ecol) / len(self.maze[0]))
         
     def get_history(self):
         return self.history
 
-    def draw_maze(self, ax):
-        ax.clear()
-
-        ax.axis([0,len(self.maze[0]),0,len(self.maze)])
     
-        for row in range(len(self.maze)):
-            for col in range(len(self.maze[0])):
-                if not self.maze[row,col]:
-                    ax.add_patch(plt.Rectangle((row, col), 1, 1))
-
-        scol = int(self.start % len(self.maze[0]))
-        srow = int((self.start-scol) / len(self.maze[0]))
-
-        ecol = int(self.end % len(self.maze[0]))
-        erow = int((self.end-ecol) / len(self.maze[0]))
-
-        ax.add_patch(plt.Rectangle((srow, scol), 1, 1, color = 'red'))
-        ax.add_patch(plt.Rectangle((erow, ecol), 1, 1, color = 'black'))
-
 
     
 #main
