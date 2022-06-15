@@ -77,6 +77,7 @@ history = m.get_history()
 
 fig = plt.figure(figsize = (10.2,7.2))
 
+
 ax = fig.add_subplot(111)
 
 plt.show(block=False)
@@ -93,20 +94,25 @@ def init():
         ax.add_patch(patch)
     return pch
 
+changed = []
+
 def animate(i):
+  
     maze = history[i % len(history)]
     for row in range(size):
-        for col in range(size):
+        for col in range(size):          
             if maze[row,col]:
                 pch[row*size+col].set_color('w')
             else:
                 pch[row*size+col].set_color('g')
+    else:
+        return pch
     return pch
 
 anim = animation.FuncAnimation(fig, animate, init_func=init,
-                               frames=len(history), interval=0.5,repeat = False, blit=True)
+                               frames=len(history), interval=20,repeat = False, blit=True)
 
-#anim.save('a_star.gif')
+#anim.save('prim_maze_creator.gif')
 plt.show()
 
 
